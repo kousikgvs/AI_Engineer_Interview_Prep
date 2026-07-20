@@ -77,12 +77,34 @@
 ---
 
 ## Interview Questions This Week Prepares You For
-- "Design an API that streams LLM responses to many concurrent users"
-- "When would you choose Redis vs Postgres for storing session context?"
-- "How does CAP theorem apply to a distributed agent system?"
+
+<details>
+<summary>"Design an API that streams LLM responses to many concurrent users"</summary>
+
+Async FastAPI with SSE/WebSocket streaming, non-blocking model calls (or a queue to inference workers), Redis for caching/rate limiting, DB connection pooling, autoscaling behind a load balancer, plus timeouts and backpressure.
+</details>
+
+<details>
+<summary>"When would you choose Redis vs Postgres for storing session context?"</summary>
+
+Redis for hot, ephemeral, low-latency session state with TTL eviction; Postgres for durable, queryable, relational data. Commonly Redis caches in front of Postgres.
+</details>
+
+<details>
+<summary>"How does CAP theorem apply to a distributed agent system?"</summary>
+
+Under a network partition you choose consistency or availability per component — serve possibly-stale agent state (AP) or refuse until consistent (CP) based on how much correctness each action needs.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"Postgres or Redis for session storage in this system?"**  
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"Postgres or Redis for session storage in this system?"</strong></summary>
+
+**What I'd do:** Redis for fast ephemeral sessions with TTL; Postgres if sessions must be durable/queryable/audited.
+**Why:** Redis gives sub-ms reads and easy expiry.
+**Tradeoff:** Redis is in-memory and less durable.
+**Rejected:** Postgres-only when latency matters and data is short-lived.
+</details>
