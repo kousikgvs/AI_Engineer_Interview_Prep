@@ -101,16 +101,43 @@
 ---
 
 ## Interview Questions This Week Prepares You For
-- "Walk me through your capstone system design"
-- "How did you evaluate your system?"
-- "What failed? What would you do differently?"
-- "Show me a production deployment"
+
+<details>
+<summary>"Walk me through your capstone system design"</summary>
+
+Present the problem, architecture (components, data flow, model choices), key tradeoffs (ADRs), how you evaluated it, what failed, and the live deployment — narrating decisions and why.
+</details>
+
+<details>
+<summary>"How did you evaluate your system?"</summary>
+
+Golden dataset + LLM-as-judge, task-specific metrics, regression tests, and production monitoring (quality, cost, latency). Show numbers and how you caught regressions.
+</details>
+
+<details>
+<summary>"What failed? What would you do differently?"</summary>
+
+Give an honest postmortem: what broke, why, what monitoring should have caught it, and the concrete fix — demonstrating engineering maturity.
+</details>
+
+<details>
+<summary>"Show me a production deployment"</summary>
+
+A live URL (not localhost) on real infrastructure with monitoring/cost dashboards and CI/CD — proving you can ship and operate, not just prototype.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"Build vs buy: host your own model or use the API?"**  
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"Build vs buy: host your own model or use the API?"</strong></summary>
+
+**What I'd do:** start with an API for speed/quality/low ops; self-host at scale for cost, privacy, or control.
+**Why:** APIs let you ship and validate fast.
+**Tradeoff:** APIs cost more per token and give less control; self-hosting adds ops burden.
+**Rejected:** self-hosting early before volume/privacy justifies it.
+</details>
 
 ---
 
