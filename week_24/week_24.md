@@ -82,13 +82,40 @@
 ---
 
 ## Interview Questions This Week Prepares You For
-- "When would you use LangGraph vs raw orchestration? What does the state model buy you?"
-- "How do you handle context-window overflow in a long conversation?"
-- "What is MCP and how does it change tool integration?"
-- "Design short-term and long-term memory for a research agent"
+
+<details>
+<summary>"When would you use LangGraph vs raw orchestration? What does the state model buy you?"</summary>
+
+LangGraph models agents as a state graph with explicit shared state and checkpointing — giving branching, loops, persistence, and resumability. Raw orchestration means building all that yourself.
+</details>
+
+<details>
+<summary>"How do you handle context-window overflow in a long conversation?"</summary>
+
+Trim old messages (keep recent ~N tokens) for speed, or summarize old turns into a running summary to preserve important context; offload details to external memory for retrieval.
+</details>
+
+<details>
+<summary>"What is MCP and how does it change tool integration?"</summary>
+
+The Model Context Protocol is an open standard connecting models to tools/data via servers, so any MCP client can use any MCP server — replacing bespoke per-integration glue.
+</details>
+
+<details>
+<summary>"Design short-term and long-term memory for a research agent"</summary>
+
+Short-term: checkpointed thread state with trimming/summarization on overflow. Long-term: embed important findings into a namespaced store, retrieve top-k by similarity, and periodically consolidate.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"Vector memory (Mem0) or graph memory (Neo4j) for this agent's long-term memory?"**
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"Vector memory (Mem0) or graph memory (Neo4j) for this agent's long-term memory?"</strong></summary>
+
+**What I'd do:** vector memory for semantic recall of facts/notes; graph memory when relationships and multi-hop reasoning between entities matter.
+**Why:** vectors are simple and fuzzy-match well; graphs capture structure.
+**Tradeoff:** graphs add modeling/ops complexity.
+**Rejected:** graph memory when simple similarity recall suffices.
+</details>
