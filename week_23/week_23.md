@@ -74,13 +74,40 @@
 ---
 
 ## Interview Questions This Week Prepares You For
-- "Explain the difference between a GAN and a VAE"
-- "How does a diffusion model generate an image from noise?"
-- "What does CLIP actually learn, and why is it zero-shot capable?"
-- "Why do CNNs use weight sharing and what does that buy you?"
+
+<details>
+<summary>"Explain the difference between a GAN and a VAE"</summary>
+
+A GAN trains a generator against a discriminator (sharp samples, unstable training). A VAE learns an encoder/decoder over a probabilistic latent space (stable, principled, blurrier samples).
+</details>
+
+<details>
+<summary>"How does a diffusion model generate an image from noise?"</summary>
+
+Training adds noise to images and learns to remove it; generation starts from pure noise and iteratively denoises over many steps into a coherent image.
+</details>
+
+<details>
+<summary>"What does CLIP actually learn, and why is it zero-shot capable?"</summary>
+
+Contrastive training aligns image and text encoders in one shared space. You classify zero-shot by comparing an image to text prompts of candidate labels — no task-specific training needed.
+</details>
+
+<details>
+<summary>"Why do CNNs use weight sharing and what does that buy you?"</summary>
+
+The same kernel applies across all positions, giving translation invariance and far fewer parameters — better generalization and efficiency on images.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"GAN, VAE, or diffusion model for this image-generation use case?"**
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"GAN, VAE, or diffusion model for this image-generation use case?"</strong></summary>
+
+**What I'd do:** diffusion for highest-quality controllable generation; VAE for a smooth latent/fast sampling; GAN for fast generation when you can manage instability.
+**Why:** diffusion leads quality; VAEs are stable/structured.
+**Tradeoff:** diffusion is slow at inference (many steps).
+**Rejected:** GANs when mode collapse/instability is a risk and quality matters most.
+</details>
