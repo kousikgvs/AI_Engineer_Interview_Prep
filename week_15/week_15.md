@@ -65,12 +65,34 @@
 ---
 
 ## Interview Questions This Week Prepares You For
-- "What is indirect prompt injection and how do you defend against it?"
-- "Explain the Raft consensus algorithm"
-- "Design the serving infrastructure for an LLM API handling 1M requests/day"
+
+<details>
+<summary>"What is indirect prompt injection and how do you defend against it?"</summary>
+
+Malicious instructions hidden in content the model reads (web page, doc) that hijack its behavior. Defend by treating retrieved content as untrusted data (not instructions), sandboxing tools, least privilege, and output filtering.
+</details>
+
+<details>
+<summary>"Explain the Raft consensus algorithm"</summary>
+
+Nodes elect a leader; the leader appends commands to a replicated log and commits an entry once a majority acknowledges; followers apply committed entries. It gives consistency and tolerates minority failures with clear election/safety rules.
+</details>
+
+<details>
+<summary>"Design the serving infrastructure for an LLM API handling 1M requests/day"</summary>
+
+~12 rps average — size for peak. Load balancer → stateless API tier → batched, autoscaled GPU inference workers → Redis cache → DB. Add rate limiting, a queue for spikes, observability, and fallbacks.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"Canary deployment or blue-green for this deployment?"**  
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"Canary deployment or blue-green for this deployment?"</strong></summary>
+
+**What I'd do:** canary for gradual validation with real traffic; blue-green when I need an instant full switch with fast rollback.
+**Why:** canary limits blast radius; blue-green minimizes downtime.
+**Tradeoff:** canary rolls out slower; blue-green doubles infrastructure.
+**Rejected:** blue-green when I want to catch issues on a small slice first.
+</details>
