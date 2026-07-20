@@ -55,12 +55,34 @@
 ---
 
 ## Interview Questions This Week Prepares You For
-- "Walk me through backpropagation from first principles"
-- "Why does Adam converge faster than SGD?"
-- "What is SVD and where would you use it in an ML system?"
+
+<details>
+<summary>"Walk me through backpropagation from first principles"</summary>
+
+Forward pass computes outputs and loss; backward pass applies the chain rule layer by layer, multiplying local derivatives to get ∂L/∂w for every weight, then gradient descent updates them. Activations stored in the forward pass are reused in the backward pass.
+</details>
+
+<details>
+<summary>"Why does Adam converge faster than SGD?"</summary>
+
+Adam adapts a per-parameter learning rate using running estimates of the gradient's first and second moments (momentum + RMSProp), so it handles sparse and ill-scaled gradients better. Downside: it can generalize slightly worse (use AdamW).
+</details>
+
+<details>
+<summary>"What is SVD and where would you use it in an ML system?"</summary>
+
+A = UΣVᵀ factorizes any matrix into rotation·scaling·rotation. Uses: PCA/dimensionality reduction, low-rank weight/embedding compression, recommender factorization, denoising, pseudo-inverses.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"Adam or SGD for this task? Defend your choice."**  
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"Adam or SGD for this task?"</strong></summary>
+
+**What I'd do:** Adam for fast convergence, sparse gradients, or prototyping; SGD+momentum with a schedule for best generalization on large training runs.
+**Why:** Adam's adaptive rates speed early progress; well-tuned SGD often finds flatter, better-generalizing minima.
+**Tradeoff:** ease of tuning vs final generalization.
+**Rejected:** SGD when tuning time/compute is scarce.
+</details>
