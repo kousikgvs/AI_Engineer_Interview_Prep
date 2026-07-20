@@ -59,12 +59,34 @@
 ---
 
 ## Interview Questions This Week Prepares You For
-- "Derive scaled dot-product attention from scratch"
-- "What is RoPE and why was it invented?"
-- "What does the KV cache actually store and why does it matter for inference cost?"
+
+<details>
+<summary>"Derive scaled dot-product attention from scratch"</summary>
+
+Attention(Q,K,V)=softmax(QKᵀ/√d_k)V. Q·K scores similarity, softmax normalizes to weights, weighted sum of V is the output. √d_k prevents large dot products from saturating softmax and killing gradients.
+</details>
+
+<details>
+<summary>"What is RoPE and why was it invented?"</summary>
+
+Rotary Positional Embedding rotates Q/K by an angle proportional to position, encoding relative position directly in attention scores; it extrapolates to longer contexts better than absolute encodings.
+</details>
+
+<details>
+<summary>"What does the KV cache store and why does it matter for inference cost?"</summary>
+
+It caches keys/values of all past tokens so each new token attends in O(seq) instead of recomputing O(seq²). It dominates inference memory and scales with context length × batch.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"GPT decoder-only or encoder-decoder for this task?"**  
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"GPT decoder-only or encoder-decoder for this task?"</strong></summary>
+
+**What I'd do:** decoder-only for open-ended generation/chat; encoder-decoder for strict input→output mapping (translation, summarization).
+**Why:** a single causal stack is simpler and scales; encoder-decoder separates understanding from generation.
+**Tradeoff:** encoder-decoder adds complexity/params.
+**Rejected:** encoder-decoder when one causal stack suffices.
+</details>
