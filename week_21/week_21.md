@@ -77,13 +77,40 @@
 ---
 
 ## Interview Questions This Week Prepares You For
-- "Walk me through your MLOps lifecycle from data to retraining"
-- "How do you make an ML experiment reproducible six months later?"
-- "What is model drift and how do you detect it?"
-- "Design a CI/CD pipeline that safely deploys a new model version"
+
+<details>
+<summary>"Walk me through your MLOps lifecycle from data to retraining"</summary>
+
+Data ingestion/validation → feature engineering → training + experiment tracking → evaluation → deployment → monitoring (drift/performance) → trigger retraining when metrics degrade — an automated, versioned loop.
+</details>
+
+<details>
+<summary>"How do you make an ML experiment reproducible six months later?"</summary>
+
+Pin and version data (DVC), code (Git), config/hyperparameters, environment (Docker), and seeds; log everything to a tracker so any run can be recreated exactly.
+</details>
+
+<details>
+<summary>"What is model drift and how do you detect it?"</summary>
+
+Performance degrading over time from data/concept drift. Detect by monitoring input distributions and prediction/label metrics and alerting when they shift beyond thresholds.
+</details>
+
+<details>
+<summary>"Design a CI/CD pipeline that safely deploys a new model version"</summary>
+
+On merge: run data/model/unit tests, train/validate, compare against production on a golden set, register if better, deploy via canary/shadow, monitor, and auto-roll-back on regression.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"MLflow or Weights & Biases for this team's experiment tracking?"**
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"MLflow or Weights & Biases for this team's experiment tracking?"</strong></summary>
+
+**What I'd do:** MLflow for open-source/self-hosted control with a model registry; W&B for rich collaboration/sweeps and managed convenience.
+**Why:** matches hosting and collaboration needs.
+**Tradeoff:** MLflow needs more setup; W&B is a paid managed dependency.
+**Rejected:** the other when hosting/budget/collaboration constraints don't fit.
+</details>
