@@ -78,12 +78,34 @@ Productionize the Week 13 agent with:
 ---
 
 ## Interview Questions This Week Prepares You For
-- "Design an evaluation system for a multi-agent coding assistant"
-- "How would you implement canary deployment for an LLM-based feature?"
-- "What is LLM-as-judge? What are its failure modes?"
+
+<details>
+<summary>"Design an evaluation system for a multi-agent coding assistant"</summary>
+
+Golden tasks with expected diffs/tests, automated code-execution checks, LLM-as-judge for quality, per-step tracing, a regression suite on every change, canary rollout, and dashboards for quality/cost/latency with alerts.
+</details>
+
+<details>
+<summary>"How would you implement canary deployment for an LLM-based feature?"</summary>
+
+Route a small % of traffic to the new model/prompt, compare quality/cost/latency/errors against the baseline, ramp up if healthy, and auto-roll-back on regression.
+</details>
+
+<details>
+<summary>"What is LLM-as-judge? What are its failure modes?"</summary>
+
+Using a strong model to score outputs against a rubric. Failure modes: position/verbosity/self-preference bias, inconsistency, and being fooled by confident wrong answers. Mitigate with clear rubrics, pairwise comparison, and human calibration.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"LLM-as-judge or golden dataset eval?"**  
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"LLM-as-judge or golden dataset eval?"</strong></summary>
+
+**What I'd do:** golden dataset for stable objective regression gates; LLM-as-judge for open-ended quality with no gold answer.
+**Why:** golden sets are reproducible; judges scale to subjective tasks.
+**Tradeoff:** judges are biased/costly; golden sets need curation.
+**Rejected:** relying on either alone — combine them.
+</details>
