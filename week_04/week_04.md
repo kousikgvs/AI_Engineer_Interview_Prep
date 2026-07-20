@@ -58,12 +58,34 @@
 ---
 
 ## Interview Questions This Week Prepares You For
-- "Derive backpropagation through a two-layer network"
-- "Why does BatchNorm help? Why do transformers prefer LayerNorm?"
-- "What is the difference between L1 and L2 regularization geometrically?"
+
+<details>
+<summary>"Derive backpropagation through a two-layer network"</summary>
+
+Forward: h=φ(W₁x), ŷ=W₂h, loss L. Backward: δ₂=∂L/∂ŷ, ∂L/∂W₂=δ₂hᵀ; δ₁=(W₂ᵀδ₂)⊙φ'(z₁), ∂L/∂W₁=δ₁xᵀ — the chain rule layer by layer.
+</details>
+
+<details>
+<summary>"Why does BatchNorm help? Why do transformers prefer LayerNorm?"</summary>
+
+BatchNorm stabilizes activation distributions and smooths the loss surface, allowing higher LRs. Transformers use LayerNorm because it normalizes per token (independent of batch size and variable sequence length), unlike BatchNorm's unreliable batch statistics.
+</details>
+
+<details>
+<summary>"What is the difference between L1 and L2 regularization geometrically?"</summary>
+
+L2's circular constraint shrinks weights smoothly; L1's diamond has axis-aligned corners, pushing some weights to exactly zero (sparsity/feature selection).
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"BatchNorm or LayerNorm? Why?"**  
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"BatchNorm or LayerNorm?"</strong></summary>
+
+**What I'd do:** LayerNorm for transformers/sequence models and small/variable batches; BatchNorm for CNNs with large fixed batches.
+**Why:** LayerNorm is batch-size independent; BatchNorm exploits batch statistics that help vision.
+**Tradeoff:** BatchNorm breaks with tiny/variable batches.
+**Rejected:** BatchNorm for sequence/streaming workloads.
+</details>
