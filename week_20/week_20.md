@@ -64,13 +64,40 @@
 ---
 
 ## Interview Questions This Week Prepares You For
-- "When would you use Lambda vs a container on EKS for model serving?"
-- "Design a serverless pipeline that processes uploaded documents into embeddings"
-- "RDS or DynamoDB for storing agent session state? Defend it"
-- "How would you migrate a monolithic AI app to AWS with zero downtime?"
+
+<details>
+<summary>"When would you use Lambda vs a container on EKS for model serving?"</summary>
+
+Lambda for lightweight, spiky, short CPU tasks (embeddings, webhooks) with zero ops; EKS for GPU inference, large/long-running models, and full control. Choose by model size, latency, and traffic pattern.
+</details>
+
+<details>
+<summary>"Design a serverless pipeline that processes uploaded documents into embeddings"</summary>
+
+S3 upload event → (SQS buffer) → Lambda chunks + embeds the doc → writes vectors + metadata to the vector DB; a DLQ and alarms handle failures, and reserved concurrency caps cost.
+</details>
+
+<details>
+<summary>"RDS or DynamoDB for storing agent session state? Defend it"</summary>
+
+DynamoDB for high-scale, low-latency key-value session lookups with auto-scaling; RDS if sessions are relational and need complex queries/transactions. Sessions are usually key-value → DynamoDB.
+</details>
+
+<details>
+<summary>"How would you migrate a monolithic AI app to AWS with zero downtime?"</summary>
+
+Assess dependencies, containerize, replicate data then cut over, run old and new in parallel, shift traffic gradually (canary/DNS weighting), verify, then decommission — with rollback ready.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"Serverless (Lambda) or containers (EKS) for this model-serving workload?"**
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"Serverless (Lambda) or containers (EKS) for this model-serving workload?"</strong></summary>
+
+**What I'd do:** Lambda for light, spiky, short CPU tasks; EKS for GPU/large/long-running serving.
+**Why:** Lambda is zero-ops and scales to zero; EKS gives GPUs and control.
+**Tradeoff:** Lambda's memory/time/no-GPU limits vs EKS's ops burden.
+**Rejected:** Lambda for heavy GPU inference; EKS for tiny sporadic tasks.
+</details>
