@@ -76,13 +76,45 @@
 ---
 
 ## Interview Questions This Week Prepares You For
-- "Write a function that retries an API call with exponential backoff"
-- "What is the difference between a list and a tuple, and when would you use each?"
-- "Write a SQL query using a window function to rank rows within a group"
-- "Why use Pydantic for LLM outputs instead of raw dict parsing?"
+
+<details>
+<summary>"Write a function that retries an API call with exponential backoff"</summary>
+
+Wrap the call in a loop; on failure sleep `base * 2**attempt` plus random jitter, and re-raise after the last attempt. Backoff avoids hammering a struggling service; jitter prevents synchronized retry storms. (See the code in this folder's interview_questions.md, Q17.)
+</details>
+
+<details>
+<summary>"What is the difference between a list and a tuple, and when would you use each?"</summary>
+
+A list is mutable; a tuple is immutable and hashable. Use a list for a changing collection, a tuple for a fixed record or dict key. Tuples are marginally faster and signal "don't change this."
+</details>
+
+<details>
+<summary>"Write a SQL query using a window function to rank rows within a group"</summary>
+
+```sql
+SELECT dept, name, salary,
+       ROW_NUMBER() OVER (PARTITION BY dept ORDER BY salary DESC) AS rnk
+FROM employees;
+```
+`PARTITION BY` restarts the ranking per group; `ORDER BY` sets the order.
+</details>
+
+<details>
+<summary>"Why use Pydantic for LLM outputs instead of raw dict parsing?"</summary>
+
+LLM output is untrusted text; Pydantic validates it against a typed schema, coerces types, and raises clear errors on missing/invalid fields. A raw dict silently passes malformed data that later crashes your code.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"Sync or async for this AI workload?"**
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"Sync or async for this AI workload?"</strong></summary>
+
+**What I'd do:** async for an I/O-bound service making many concurrent LLM/DB calls; sync for a simple script or CPU-bound work.
+**Why:** async raises I/O throughput on one thread without extra processes.
+**Tradeoff:** more concurrency but harder debugging and library constraints.
+**Rejected alternative:** threads — the GIL and race conditions add overhead for mostly-waiting workloads.
+</details>
