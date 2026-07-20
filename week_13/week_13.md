@@ -84,12 +84,34 @@ Build "Tern Coding Agent" with:
 ---
 
 ## Interview Questions This Week Prepares You For
-- "Design a multi-agent system for code review — how do you prevent cascading failures?"
-- "What is durable execution and when do you need it?"
-- "Walk me through the PRAOR loop and where agents fail at each stage"
+
+<details>
+<summary>"Design a multi-agent system for code review — how do you prevent cascading failures?"</summary>
+
+Specialized agents (analyzer, security, style) with a coordinator; isolate failures with timeouts/retries/circuit breakers, validate each output, add a critic to catch errors, keep humans in the loop for merges, and log everything.
+</details>
+
+<details>
+<summary>"What is durable execution and when do you need it?"</summary>
+
+Persisting agent state so it survives crashes/restarts and resumes (e.g., Temporal). Needed for long-running multi-step agents where losing progress is costly.
+</details>
+
+<details>
+<summary>"Walk me through the PRAOR loop and where agents fail at each stage"</summary>
+
+Perceive (bad context) → Reason (flawed plan) → Act (wrong tool/args) → Observe (misread result) → Repeat (compounding errors, context loss). Guard each stage with verification, critics, and checkpoints.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"Multi-agent or single-agent architecture for this task?"**  
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"Multi-agent or single-agent architecture for this task?"</strong></summary>
+
+**What I'd do:** single agent with good tools first; multi-agent only when the task clearly splits into specialties or needs review/debate.
+**Why:** fewer moving parts, easier to debug.
+**Tradeoff:** multi-agent adds coordination and failure surface.
+**Rejected:** multi-agent for tasks a single tooled agent handles.
+</details>
