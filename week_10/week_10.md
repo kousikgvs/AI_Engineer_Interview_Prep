@@ -80,12 +80,34 @@ Full pipeline from raw data to retrieval:
 ---
 
 ## Interview Questions This Week Prepares You For
-- "Design an embedding pipeline that handles 10 million documents"
-- "What is Change Data Capture and why does it matter for AI systems?"
-- "Explain HNSW — how does approximate nearest neighbor search work?"
+
+<details>
+<summary>"Design an embedding pipeline that handles 10 million documents"</summary>
+
+Ingest → clean/validate (Airflow) → chunk → batch-embed on GPU workers (dedupe + version) → upsert into a vector DB (HNSW) with metadata → serve a retrieval API; add CDC for updates, monitoring, and a re-embed plan when the model changes.
+</details>
+
+<details>
+<summary>"What is Change Data Capture and why does it matter for AI systems?"</summary>
+
+CDC streams row-level changes from source DBs (via the WAL) so downstream systems like an embedding index stay fresh in near-real-time instead of full batch reprocessing.
+</details>
+
+<details>
+<summary>"Explain HNSW — how does approximate nearest neighbor search work?"</summary>
+
+A multi-layer proximity graph: search starts sparse at the top and descends, greedily hopping to nearer neighbors — fast, high-recall approximate search in near-log time.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"Kafka or SQS for this pipeline?"**  
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"Kafka or SQS for this pipeline?"</strong></summary>
+
+**What I'd do:** Kafka for high-throughput, ordered, replayable streams with multiple consumers; SQS for simple, managed, decoupled task queues.
+**Why:** Kafka retains an event log; SQS is zero-ops.
+**Tradeoff:** Kafka carries operational complexity.
+**Rejected:** Kafka when a simple managed queue suffices.
+</details>
