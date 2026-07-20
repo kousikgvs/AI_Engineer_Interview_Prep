@@ -69,12 +69,34 @@
 ---
 
 ## Interview Questions This Week Prepares You For
-- "Compare BM25 and dense retrieval — when would you use each?"
-- "What is HyDE and why does it improve retrieval?"
-- "How would you evaluate your retrieval system without labeled data?"
+
+<details>
+<summary>"Compare BM25 and dense retrieval — when would you use each?"</summary>
+
+BM25 for exact/keyword/rare-term and cold-start queries; dense for semantic/paraphrase matches. Hybrid (fused) is the most robust default.
+</details>
+
+<details>
+<summary>"What is HyDE and why does it improve retrieval?"</summary>
+
+The model generates a hypothetical answer, embeds it, and retrieves against that — bridging the vocabulary gap between a short query and full documents.
+</details>
+
+<details>
+<summary>"How would you evaluate your retrieval system without labeled data?"</summary>
+
+LLM-as-judge relevance, synthetic query-doc pairs, groundedness/faithfulness checks, proxy signals (answer correctness, "I don't know" rate), and user feedback over time.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"BM25, dense retrieval, or hybrid retrieval for this use case?"**  
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"BM25, dense retrieval, or hybrid retrieval for this use case?"</strong></summary>
+
+**What I'd do:** hybrid by default — dense for semantics + BM25 for exact/rare terms, fused via RRF.
+**Why:** most robust across query types.
+**Tradeoff:** more components and latency.
+**Rejected:** pure dense (misses exact matches) or pure BM25 (misses paraphrase) unless the domain clearly favors one.
+</details>
