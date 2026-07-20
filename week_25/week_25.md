@@ -76,14 +76,46 @@
 ---
 
 ## Interview Questions This Week Prepares You For
-- "What actually makes a model generative? Explain from a probabilistic standpoint"
-- "Why do LLMs hallucinate, and how would you reduce it in a production system?"
-- "Where does bias enter an ML system, and how do you measure and mitigate it?"
-- "What are the copyright and data-provenance risks of training on scraped data?"
-- "How would you design responsible-AI guardrails for an enterprise deployment?"
+
+<details>
+<summary>"What actually makes a model generative? Explain from a probabilistic standpoint"</summary>
+
+A generative model learns the data distribution P(x) (or P(x|context)) so it can sample new data; a discriminative model only learns P(y|x), the decision boundary. Generation = sampling from the learned distribution.
+</details>
+
+<details>
+<summary>"Why do LLMs hallucinate, and how would you reduce it in a production system?"</summary>
+
+They output the most probable continuation, which needn't be factual, with no ground-truth access. Reduce with RAG grounding, citations, self-consistency, lower temperature, verification, and guardrails.
+</details>
+
+<details>
+<summary>"Where does bias enter an ML system, and how do you measure and mitigate it?"</summary>
+
+Data, labeling, objective, and deployment context. Measure with fairness metrics across slices (demographic parity, equal opportunity); mitigate via balanced data, debiasing, evaluation, and human review.
+</details>
+
+<details>
+<summary>"What are the copyright and data-provenance risks of training on scraped data?"</summary>
+
+Legal exposure from copyrighted/unlicensed content, memorization/regurgitation of training data (including PII), and license violations from unclear provenance — mitigate with dedup, filtering, and provenance tracking.
+</details>
+
+<details>
+<summary>"How would you design responsible-AI guardrails for an enterprise deployment?"</summary>
+
+Layered: input/output validation, PII redaction, toxicity/safety classifiers, prompt-injection defense, human-in-the-loop for high-stakes actions, audit logging, bias/hallucination evals, and clear escalation — with monitoring.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"Ship now with a documented hallucination risk, or delay to add grounding + guardrails?"**
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"Ship now with a documented hallucination risk, or delay to add grounding + guardrails?"</strong></summary>
+
+**What I'd do:** low-stakes — ship with disclaimers and monitoring; high-stakes (medical/legal/financial) — delay to add grounding and guardrails.
+**Why:** risk should match the cost of being wrong.
+**Tradeoff:** speed/learning vs user harm and trust.
+**Rejected:** shipping unguarded in high-stakes domains, or over-delaying a low-risk feature.
+</details>
