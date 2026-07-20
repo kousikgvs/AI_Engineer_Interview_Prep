@@ -78,13 +78,40 @@
 ---
 
 ## Interview Questions This Week Prepares You For
-- "Explain the difference between a security group and a network ACL"
-- "How would you give an EC2 instance access to S3 without hardcoding credentials?"
-- "Walk me through what happens when a request hits your ALB"
-- "How does IAM enforce least privilege?"
+
+<details>
+<summary>"Explain the difference between a security group and a network ACL"</summary>
+
+Security groups are stateful, instance-level, allow-only rules. Network ACLs are stateless, subnet-level, and support both allow and deny. SGs are the primary control; NACLs add coarse subnet filtering.
+</details>
+
+<details>
+<summary>"How would you give an EC2 instance access to S3 without hardcoding credentials?"</summary>
+
+Attach an IAM role to the instance; the SDK automatically uses temporary, auto-rotated credentials from instance metadata — no keys in code.
+</details>
+
+<details>
+<summary>"Walk me through what happens when a request hits your ALB"</summary>
+
+The ALB terminates SSL, evaluates listener/routing rules, health-checks targets, and forwards the request to a healthy instance in a target group, balancing load.
+</details>
+
+<details>
+<summary>"How does IAM enforce least privilege?"</summary>
+
+Policies grant only the specific actions/resources needed, attached to users/groups/roles; deny by default and grant narrowly with conditions — so a compromised principal can do minimal damage.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"IAM role or access keys for this service-to-service call?"**
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"IAM role or access keys for this service-to-service call?"</strong></summary>
+
+**What I'd do:** IAM role with temporary credentials.
+**Why:** no long-lived secrets to leak; auto-rotated and scoped.
+**Tradeoff:** roles need correct trust configuration.
+**Rejected:** static access keys — they leak and rarely get rotated.
+</details>
