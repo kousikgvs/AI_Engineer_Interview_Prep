@@ -58,12 +58,34 @@
 ---
 
 ## Interview Questions This Week Prepares You For
-- "Explain KL divergence and where it appears in training"
-- "Derive the cross-entropy loss from MLE"
-- "What is the bias-variance tradeoff?"
+
+<details>
+<summary>"Explain KL divergence and where it appears in training"</summary>
+
+KL(p‖q) = Σ p log(p/q) measures the extra bits from using q instead of p; it's ≥0 and asymmetric. In training it appears as the VAE latent regularizer, the RLHF/DPO penalty keeping the policy near a reference, and in distillation.
+</details>
+
+<details>
+<summary>"Derive the cross-entropy loss from MLE"</summary>
+
+Maximizing label likelihood = maximizing Σ log q(yᵢ) = minimizing −Σ log q(yᵢ), which is cross-entropy. So minimizing cross-entropy is exactly maximum likelihood for categorical outputs.
+</details>
+
+<details>
+<summary>"What is the bias-variance tradeoff?"</summary>
+
+Error = bias² + variance + noise. Simple models underfit (high bias); complex models overfit (high variance). You balance them via model capacity and regularization.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"Should we use a Frequentist or Bayesian approach for this classification problem?"**  
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"Frequentist or Bayesian approach for this classification problem?"</strong></summary>
+
+**What I'd do:** Bayesian with informative priors when data is scarce or calibrated uncertainty matters; frequentist when data is plentiful and simple point estimates suffice.
+**Why:** priors regularize small-data estimates and yield uncertainty.
+**Tradeoff:** Bayesian gives uncertainty but costs modeling/compute.
+**Rejected:** the other approach when its assumptions don't match the data regime.
+</details>
