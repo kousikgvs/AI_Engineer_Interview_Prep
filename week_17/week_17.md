@@ -87,12 +87,34 @@ You must:
 ---
 
 ## Interview Questions This Week Prepares You For
-- "What is test-time compute scaling and why does it matter?"
-- "Explain process reward models vs outcome reward models"
-- "How would you design a training setup to teach an agent to use tools via RL?"
+
+<details>
+<summary>"What is test-time compute scaling and why does it matter?"</summary>
+
+Spending more compute at inference (longer reasoning, more samples, search) improves accuracy on hard tasks — a new scaling axis beyond bigger models/pretraining.
+</details>
+
+<details>
+<summary>"Explain process reward models vs outcome reward models"</summary>
+
+ORMs score only the final answer; PRMs score each reasoning step. PRMs give denser signal that catches wrong steps early and improves reasoning, but need costly step-level labels.
+</details>
+
+<details>
+<summary>"How would you design a training setup to teach an agent to use tools via RL?"</summary>
+
+Build an environment with tools and verifiable tasks, reward task success, sample trajectories, and optimize the policy (e.g., GRPO); add a curriculum and process rewards to ease credit assignment.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"PRMs or ORMs for this reasoning task?"**  
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"PRMs or ORMs for this reasoning task?"</strong></summary>
+
+**What I'd do:** PRMs when reasoning quality matters and steps are labelable; ORMs when only the final answer is checkable and step labels are too costly.
+**Why:** PRMs give denser, earlier signal.
+**Tradeoff:** PRMs need expensive step-level labels.
+**Rejected:** ORM-only when it lets bad reasoning reach correct answers by luck.
+</details>
