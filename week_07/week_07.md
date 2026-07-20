@@ -77,12 +77,34 @@
 ---
 
 ## Interview Questions This Week Prepares You For
-- "How does speculative decoding work?"
-- "What is PagedAttention and why does vLLM use it?"
-- "Walk me through LoRA — the math, not just the concept"
+
+<details>
+<summary>"How does speculative decoding work?"</summary>
+
+A small draft model proposes several tokens; the large model verifies them in one parallel pass and accepts the longest correct prefix. It cuts latency while preserving the target model's output distribution.
+</details>
+
+<details>
+<summary>"What is PagedAttention and why does vLLM use it?"</summary>
+
+It manages the KV cache in fixed-size non-contiguous pages (like OS virtual memory), eliminating fragmentation and enabling sharing across requests — so more sequences fit in GPU memory and throughput rises.
+</details>
+
+<details>
+<summary>"Walk me through LoRA — the math"</summary>
+
+Freeze W and learn a low-rank update ΔW = BA (B: d×r, A: r×d, r≪d); the layer computes Wx + (α/r)BAx. Only A and B train, so the adapter is tiny and swappable/mergeable.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"Fine-tune or use few-shot prompting for this task? Walk through the decision."**  
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"Fine-tune or use few-shot prompting for this task?"</strong></summary>
+
+**What I'd do:** start with few-shot prompting; fine-tune only if prompts get too long/costly or quality plateaus.
+**Why:** prompting iterates faster and cheaper.
+**Tradeoff:** fine-tuning gives consistency/lower latency but adds data/training/maintenance cost.
+**Rejected:** fine-tuning before proving the task needs it.
+</details>
