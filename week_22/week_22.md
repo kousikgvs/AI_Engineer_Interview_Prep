@@ -70,13 +70,40 @@
 ---
 
 ## Interview Questions This Week Prepares You For
-- "Design an LLM gateway that handles provider outages gracefully"
-- "How do you trace a failure across a multi-step agent pipeline?"
-- "What would you monitor for an LLM app that you would NOT monitor for a normal API?"
-- "How do you detect and control a runaway cost incident?"
+
+<details>
+<summary>"Design an LLM gateway that handles provider outages gracefully"</summary>
+
+A unified API in front of multiple providers with health checks, automatic fallback/routing, retries with backoff, circuit breakers, semantic + prompt caching, rate limiting, token budgets, and cost/latency logging.
+</details>
+
+<details>
+<summary>"How do you trace a failure across a multi-step agent pipeline?"</summary>
+
+Use a trace id and per-step spans (Langfuse/OpenTelemetry) capturing prompts, tool calls, retrieved docs, and timings, then walk the trace to the failing span.
+</details>
+
+<details>
+<summary>"What would you monitor for an LLM app that you would NOT for a normal API?"</summary>
+
+Token usage/cost per request, prompt/model versions, output quality/eval scores, hallucination/guardrail triggers, retrieval relevance, and per-step agent traces.
+</details>
+
+<details>
+<summary>"How do you detect and control a runaway cost incident?"</summary>
+
+Monitor tokens/cost per request/tenant, alert on anomalies (retry loops, huge contexts, injection), enforce budgets/rate limits, and add circuit breakers to cut off runaway usage automatically.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"Self-hosted observability (Langfuse + ELK) or managed (LangSmith + Datadog)?"**
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"Self-hosted observability (Langfuse + ELK) or managed (LangSmith + Datadog)?"</strong></summary>
+
+**What I'd do:** self-host for data privacy, cost control, and customization; managed for speed and low ops.
+**Why:** privacy/cost vs time-to-value.
+**Tradeoff:** self-hosting adds operational burden.
+**Rejected:** managed when data can't leave your environment; self-hosted when the team wants zero ops.
+</details>
