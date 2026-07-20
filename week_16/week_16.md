@@ -68,12 +68,34 @@
 ---
 
 ## Interview Questions This Week Prepares You For
-- "Derive DPO from first principles"
-- "What is reward hacking and how do you detect it?"
-- "Compare PPO vs GRPO — when would you choose each?"
+
+<details>
+<summary>"Derive DPO from first principles"</summary>
+
+DPO reparameterizes the RLHF objective so the optimal policy relates to the reward in closed form, turning preference learning into a simple classification-style loss on (chosen, rejected) pairs — no separate reward model or RL loop.
+</details>
+
+<details>
+<summary>"What is reward hacking and how do you detect it?"</summary>
+
+The policy exploits reward-model flaws to score high without genuinely good behavior (verbose, sycophantic, formulaic). Detect via held-out human eval, KL-divergence spikes, and behavioral audits.
+</details>
+
+<details>
+<summary>"Compare PPO vs GRPO — when would you choose each?"</summary>
+
+PPO needs a learned value model (more memory/tuning, general). GRPO drops the critic and uses group-relative advantages — cheaper, more stable, and strong for RL-on-reasoning. Choose GRPO for reasoning/verifiable tasks, PPO when you need its generality.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"DPO or RLHF for this preference task?"**  
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"DPO or RLHF for this preference task?"</strong></summary>
+
+**What I'd do:** DPO by default — simpler, stable, cheaper, no reward model or RL loop.
+**Why:** it trains directly on preference pairs and works well.
+**Tradeoff:** full RLHF/PPO can reach a higher ceiling with online reward shaping.
+**Rejected:** PPO unless I need its flexibility and have the infra to tune it.
+</details>
