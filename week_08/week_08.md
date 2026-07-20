@@ -63,12 +63,34 @@
 ---
 
 ## Interview Questions This Week Prepares You For
-- "What is the roofline model? Is attention compute-bound or memory-bound?"
-- "Walk me through Tensor Parallelism vs Pipeline Parallelism"
-- "How does Flash Attention reduce memory complexity?"
+
+<details>
+<summary>"What is the roofline model? Is attention compute- or memory-bound?"</summary>
+
+The roofline caps achievable FLOPs by either compute or memory bandwidth vs arithmetic intensity. Attention is largely memory-bound (much data movement per FLOP), which is why IO-aware Flash Attention helps.
+</details>
+
+<details>
+<summary>"Walk me through Tensor Parallelism vs Pipeline Parallelism"</summary>
+
+Tensor parallelism splits individual matmuls across GPUs (needs fast interconnect, low latency). Pipeline parallelism splits layers across GPUs and streams microbatches (has bubble overhead). They're often combined for huge models.
+</details>
+
+<details>
+<summary>"How does Flash Attention reduce memory complexity?"</summary>
+
+It tiles Q/K/V in SRAM and computes softmax incrementally (online softmax), never writing the full N×N matrix to HBM — memory drops from O(N²) to O(N) and it runs faster.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"Data parallelism or tensor parallelism for this model size?"**  
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"Data parallelism or tensor parallelism for this model size?"</strong></summary>
+
+**What I'd do:** data parallelism while the model fits on one GPU; add tensor (and pipeline) parallelism once it doesn't.
+**Why:** DP is simplest and scales throughput.
+**Tradeoff:** TP adds heavy inter-GPU communication.
+**Rejected:** TP for models that fit in a single GPU.
+</details>
