@@ -80,12 +80,34 @@
 ---
 
 ## Interview Questions This Week Prepares You For
-- "How would you design a memory system for a long-running AI assistant?"
-- "What is the lost-in-the-middle problem and how do you mitigate it?"
-- "How do you evaluate an LLM without a ground truth dataset?"
+
+<details>
+<summary>"How would you design a memory system for a long-running AI assistant?"</summary>
+
+Short-term: rolling window + summarize old turns. Long-term: embed and store important facts/events, retrieve relevant ones by similarity, and periodically consolidate/summarize to bound size.
+</details>
+
+<details>
+<summary>"What is the lost-in-the-middle problem and how do you mitigate it?"</summary>
+
+Models attend better to the start/end of long contexts than the middle. Mitigate by reranking key content to the edges, compressing, or shrinking the context.
+</details>
+
+<details>
+<summary>"How do you evaluate an LLM without a ground truth dataset?"</summary>
+
+LLM-as-judge with rubrics, curated golden sets, pairwise preference comparisons, reference-free metrics, and human spot checks — tracking regressions over time.
+</details>
 
 ---
 
 ## Engineering Judgment Question
-**"Fine-tune or use RAG for this use case?"**  
-Write your answer covering: what you would do, why, what tradeoff you are making, and what alternative you rejected.
+
+<details>
+<summary><strong>"Fine-tune or use RAG for this use case?"</strong></summary>
+
+**What I'd do:** RAG for current/large/changing knowledge; fine-tune for fixed style/format/behavior.
+**Why:** RAG updates by changing data, not weights.
+**Tradeoff:** RAG adds retrieval latency; fine-tuning bakes knowledge in but goes stale.
+**Rejected:** fine-tuning for frequently-changing facts.
+</details>
